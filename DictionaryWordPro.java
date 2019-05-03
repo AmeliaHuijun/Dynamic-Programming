@@ -31,7 +31,7 @@ public class DictionaryWordPro {
 		String s2 = "bcoabt";
 		//System.out.println(s1.substring(3, 6));
 		
-		boolean[] result = WordBreak(s2, list);
+		boolean[] result = WordBreak2(s1, list);
 		//System.out.println(result);
 		for(int i=1; i<result.length;i++) {
 			System.out.println(result[i]);
@@ -50,6 +50,28 @@ public class DictionaryWordPro {
 				current = current || (M[j] && wordDict.contains(s.substring(j, i)));
 			}
 			M[i] = current;
+		}
+		return M;
+	}
+	
+	//The last method did a lot of judges which aren't necessary. I will improve it.
+	public static boolean[] WordBreak2(String s, List<String> wordDict) {
+		int n = s.length();
+		boolean[] M = new boolean[n+1];
+		//M[1] = wordDict.contains(s.substring(0));
+		//induction rule
+		for(int i = 2; i <= n; i++) {
+			if(wordDict.contains(s.substring(0, i))) {
+				M[i] = true;
+				continue;
+			}
+			//boolean current = wordDict.contains(s.substring(0, i));
+			for(int j = 1; j < i; j++) {
+				if(M[j] && wordDict.contains(s.substring(j, i))) {
+					M[i] = true;
+					break;
+				}
+			}
 		}
 		return M;
 	}
